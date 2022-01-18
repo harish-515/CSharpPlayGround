@@ -1,48 +1,39 @@
-﻿using CSharpPlayGrond.DesignPatterns.Behavioral;
-using CSharpPlayGrond.DesignPatterns.Creational;
-using CSharpPlayGrond.DesignPatterns.Structural;
-using CSharpPlayGrond.DesignPatterns.Structural.Decorator;
-using CSharpPlayGrond.GeekForGeeks;
-using CSharpPlayGrond.Multithreading;
-using CSharpPlayGrond.Multithreading.Tasks;
-using CSharpPlayGrond.Others;
+﻿using CSharpPlayGrond.GeekForGeeks;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using static Coding.Exercise.FieldElement;
-using static CSharpPlayGrond.DesignPatterns.Behavioral.MoneyTransferCommand;
 
 namespace CSharpPlayGrond
 {
     public class Person
     {
-        public string Name  { get; set; }
+        public string Name { get; set; }
+
         public static implicit operator int(Person p)
         {
-            return p.Name.Length; 
+            return p.Name.Length;
         }
     }
-
 
     public static class StringExtensions
     {
         public static int StringLength(this string str)
         {
-            return str.Length; 
+            return str.Length;
         }
-
     }
 
-
-    struct MyStruct
+    internal struct MyStruct
     {
-        static int x = 25;
-        static int y = 50;
+        private static int x = 25;
+        private static int y = 50;
+
         public void SetXY(int i, int j)
         {
             x = i;
             y = j;
         }
+
         public static void ShowSum()
         {
             int sum = x + y;
@@ -50,9 +41,8 @@ namespace CSharpPlayGrond
         }
     }
 
-    static class Program
+    internal static class Program
     {
-
         public static int[][] FloodFill(int[][] image, int sr, int sc, int newColor)
         {
             int initialColor = image[sr][sc];
@@ -85,18 +75,18 @@ namespace CSharpPlayGrond
                 }
 
                 PrintImage(image);
-
             }
             return image;
         }
 
         public static void PrintImage(int[][] image)
         {
-            for(int i = 0; i < image.Length; i++)
+            for (int i = 0; i < image.Length; i++)
             {
                 Console.WriteLine(String.Join(", ", image[i]));
             }
         }
+
         public delegate void Del();
 
         public static void del1()
@@ -131,7 +121,6 @@ namespace CSharpPlayGrond
                     res = false;
                     break;
                 }
-
             }
 
             return res;
@@ -141,7 +130,6 @@ namespace CSharpPlayGrond
         {
             int[] parr = new int[26];
             int[] sarr = new int[26];
-
 
             foreach (char ch in p)
             {
@@ -155,7 +143,7 @@ namespace CSharpPlayGrond
 
             List<int> result = new List<int>();
 
-            for (int i = 0; i < s.Length - p.Length+1; i++)
+            for (int i = 0; i < s.Length - p.Length + 1; i++)
             {
                 if (AreEqual(parr, sarr))
                 {
@@ -169,35 +157,36 @@ namespace CSharpPlayGrond
             return result;
         }
 
-        class A
+        private class A
         {
             public int MyProperty { get; set; }
 
             public int MyProperty1 { get; set; }
+
             public void call()
             {
                 Console.WriteLine("a");
             }
         }
 
-        class Coupa
+        private class Coupa
         {
-            public static int GetPossibleIndex(int[] A,int k)
+            public static int GetPossibleIndex(int[] A, int k)
             {
                 int lo, hi, mid;
                 lo = 0;
-                hi = A.Length-1;
+                hi = A.Length - 1;
                 mid = 0;
 
                 while (lo <= hi)
                 {
                     mid = lo + (hi - lo) / 2;
 
-                    if(A[mid] < k)
+                    if (A[mid] < k)
                     {
-                        lo = mid + 1; 
+                        lo = mid + 1;
                     }
-                    else if(A[mid] > k)
+                    else if (A[mid] > k)
                     {
                         hi = mid - 1;
                     }
@@ -210,7 +199,7 @@ namespace CSharpPlayGrond
                 return lo;
             }
 
-            public static int NextGreatestElement(int[]A,int k)
+            public static int NextGreatestElement(int[] A, int k)
             {
                 Array.Sort(A);
                 int i = GetPossibleIndex(A, k);
@@ -219,15 +208,13 @@ namespace CSharpPlayGrond
                     return k + 1;
 
                 int j = i;
-                while(j+1 < A.Length && (A[j+1] - A[j]) == 1)
+                while (j + 1 < A.Length && (A[j + 1] - A[j]) == 1)
                 {
                     j++;
                 }
 
-                return A[j]+1;
+                return A[j] + 1;
             }
-
-
         }
 
         public static int GetRandom(Random rn)
@@ -235,9 +222,9 @@ namespace CSharpPlayGrond
             Console.WriteLine("Called");
             return rn.Next() % 10;
         }
-        static void Main(string[] args)
-        {
 
+        private static void Main(string[] args)
+        {
             //int[] list1 = new int[3] { 0,0,0 };
             //int[] list2 = new int[3] { 0,1,1 };
             ////int[] list3 = new int[3] { 1, 0, 1 };
@@ -248,7 +235,6 @@ namespace CSharpPlayGrond
 
             //int[][] newimage = FloodFill(image, 1, 1, 2);
 
-
             //ThreadStart d = new ThreadStart(del1);
             //d += del2;
             //d += del3;
@@ -258,7 +244,6 @@ namespace CSharpPlayGrond
             //t1.Start();
             //t1.Join();
 
-
             //Console.WriteLine(String.Join(",",FindAnagrams("abab", "ab")));
 
             //BuilderDemo.Demo();
@@ -267,7 +252,6 @@ namespace CSharpPlayGrond
 
             //SingletonTester.TestSingleton();
             //SingletonTester.TestPerThreadSingleton();
-
 
             //TaskIntroductionDemo.Demo();
             //TaskCancellationDemo.Demo();
@@ -279,9 +263,7 @@ namespace CSharpPlayGrond
 
             //TaskDataSharing.ReadWriteLockDemo();
 
-
             //Console.WriteLine("result : {0}",Coupa.NextGreatestElement(new int[] { 1,  3, 2, 4, 5 },-2));
-
 
             //Console.WriteLine(ArraysExercises.MajorityElement(new int[] { 2, 2, 3,2, 5 }));
             //Console.WriteLine($"{ArraysExercises.MaxLengthAfterFlip(new int[] { 1, 0, 0, 1,0},2)}");
@@ -297,12 +279,10 @@ namespace CSharpPlayGrond
 
             //Console.WriteLine(sent.ToString());
 
-
             //DesignPatterns.Behavioral.CQSDemo.Demo();
 
             //CommandDemo.CompositeCommandDemo();
             //CommandDemo.MoneyTransferCommand();
-
 
             //Console.WriteLine(
             //    String.Join(",",ArraysExercises.GetLeaders(
@@ -310,14 +290,11 @@ namespace CSharpPlayGrond
             //        )
             //    ));
 
-
             //Console.WriteLine(
             //   StringExercises.LeftMostRepeatingCharacter("geeksforgeeks")
             //    );
 
-
             //LinkedListExercises.demo();
-
 
             int[] arr = { 2, 3, 3, 5, 5, 5, 6, 6 };
             Console.WriteLine(ArraysExercises.BinarySearch(arr, 6));
@@ -329,14 +306,11 @@ namespace CSharpPlayGrond
             //Console.WriteLine($"{ArraysExercises.LongestConsecutiveSequence(new int[] { 1,2,3,4,5,6,7 })}");
             Console.ReadKey();
         }
-
     }
-
-
 
     #region "------------"
 
-  namespace Coding.Exercise
+    namespace Coding.Exercise
     {
         public interface IRenderer
         {
@@ -360,7 +334,6 @@ namespace CSharpPlayGrond
             {
                 Name = "Triangle";
             }
-
         }
 
         public class Square : Shape
@@ -380,14 +353,7 @@ namespace CSharpPlayGrond
         {
             public string WhatToRenderAs => "pixels";
         }
-
     }
 
-
-
-
-    #endregion
-
-
+    #endregion "------------"
 }
-

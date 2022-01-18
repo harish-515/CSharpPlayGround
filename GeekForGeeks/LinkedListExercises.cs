@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 
 namespace CSharpPlayGrond.GeekForGeeks
 {
-    class ListNode
+    internal class ListNode
     {
         public int val;
         public ListNode next;
@@ -19,7 +16,7 @@ namespace CSharpPlayGrond.GeekForGeeks
         }
     }
 
-    class LinkedList
+    internal class LinkedList
     {
         public LinkedList()
         {
@@ -27,6 +24,7 @@ namespace CSharpPlayGrond.GeekForGeeks
         }
 
         private ListNode _head;
+
         public ListNode Head
         {
             get
@@ -38,10 +36,10 @@ namespace CSharpPlayGrond.GeekForGeeks
                 _head = value;
             }
         }
-        
+
         public void AddBegin(int val)
         {
-            if(_head == null)
+            if (_head == null)
             {
                 _head = new ListNode(val);
             }
@@ -52,14 +50,13 @@ namespace CSharpPlayGrond.GeekForGeeks
                 _head = temp;
             }
         }
-        
-    
+
         public void print()
         {
             StringBuilder sb = new StringBuilder();
             ListNode ptr = _head;
 
-            while(ptr != null)
+            while (ptr != null)
             {
                 sb.Append(ptr.val);
                 sb.Append("->");
@@ -69,23 +66,21 @@ namespace CSharpPlayGrond.GeekForGeeks
             string final = sb.ToString();
             Console.WriteLine(string.IsNullOrEmpty(final) ? "Linked list is empty" : final);
         }
-    
     }
 
-    static class LinkedListExercises
+    internal static class LinkedListExercises
     {
         public static ListNode DeleteDuplicates(ListNode head)
         {
-
             ListNode curr = head;
             ListNode next = head.next;
 
             if (head == null)
                 return head;
 
-            while(curr.next != null)
+            while (curr.next != null)
             {
-                if(curr.val == curr.next.val)
+                if (curr.val == curr.next.val)
                 {
                     next = curr.next.next;
                     curr.next = null;
@@ -102,19 +97,18 @@ namespace CSharpPlayGrond.GeekForGeeks
 
         public static ListNode EliminateAllDuplicates(ListNode head)
         {
-
             if (head == null)
                 return head;
 
             ListNode dummy = new ListNode(0);
-            dummy.next = head;            
+            dummy.next = head;
 
             ListNode prev = dummy;
             ListNode curr = dummy.next;
 
             while (curr.next != null)
             {
-                if(prev.next.val == curr.next.val)
+                if (prev.next.val == curr.next.val)
                 {
                     prev.next = curr.next.next;
                     curr = curr.next;
@@ -127,7 +121,6 @@ namespace CSharpPlayGrond.GeekForGeeks
 
             return dummy.next;
         }
-
 
         public static int GetDecimalValue(ListNode head)
         {
@@ -232,7 +225,6 @@ namespace CSharpPlayGrond.GeekForGeeks
             }
 
             return head;
-
         }
 
         public static void demo()
@@ -244,8 +236,8 @@ namespace CSharpPlayGrond.GeekForGeeks
 
             //Console.Write(GetDecimalValue(s1.Head));
 
-           s1.Head = EliminateAllDuplicates(s1.Head);
-            s1.print(); 
+            s1.Head = EliminateAllDuplicates(s1.Head);
+            s1.print();
 
             //    LinkedList s1 = new LinkedList();
             //    s1.AddBegin(8);

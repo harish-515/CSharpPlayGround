@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.Behavioral
 {
     /// <summary>
     /// objects represent an operation
-    /// 
+    ///
     /// An object which represents an instruction to perform
     /// a perticular action. Contains all the information necessary for the action
     /// to be taken.
     /// </summary>
 
     #region " Example 1 "
-    
+
     public class BankAccount
     {
         private int balance;
@@ -29,36 +27,35 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
 
         public bool Withdraw(int amount)
         {
-
             if (balance - amount >= overdraftLimit)
             {
                 balance -= amount;
                 Console.WriteLine($"Withdrew {amount},Total balance now {balance}");
                 return true;
             }
-            else 
+            else
                 return false;
         }
-
 
         public override string ToString()
         {
             return $"The present balance : {balance}";
         }
     }
-    
+
     public interface ICommand
     {
         void Call();
+
         void Undo();
 
-         bool Success { get; set; }
+        bool Success { get; set; }
     }
 
     public class BankAccountCommand : ICommand
     {
-
         private BankAccount account;
+
         public enum Action
         {
             Deposit,
@@ -70,15 +67,14 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
 
         public bool Success { get; set; }
 
-        public BankAccountCommand(BankAccount account,Action action,int amount)
+        public BankAccountCommand(BankAccount account, Action action, int amount)
         {
             this.account = account;
             this.action = action;
             this.amount = amount;
         }
 
-
-        public  void Call()
+        public void Call()
         {
             switch (action)
             {
@@ -86,43 +82,43 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
                     account.Deposit(amount);
                     Success = true;
                     break;
-                case Action.Withdraw:
-                    Success = account.Withdraw(amount); 
-                    break;
-                default:
-                    throw new InvalidOperationException(); 
 
-            }
-        }
-
-        public  void Undo()
-        {
-            if (!Success) return;
-            switch (action)
-            {
-                case Action.Deposit:                  
-                    account.Withdraw(amount);
-                    break;
                 case Action.Withdraw:
-                    account.Deposit(amount);
+                    Success = account.Withdraw(amount);
                     break;
+
                 default:
                     throw new InvalidOperationException();
             }
         }
 
+        public void Undo()
+        {
+            if (!Success) return;
+            switch (action)
+            {
+                case Action.Deposit:
+                    account.Withdraw(amount);
+                    break;
 
+                case Action.Withdraw:
+                    account.Deposit(amount);
+                    break;
+
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
     }
+
     public class CompositeBankAccountCommand : List<BankAccountCommand>, ICommand
     {
         public CompositeBankAccountCommand()
         {
-
         }
 
-        public CompositeBankAccountCommand(IEnumerable<BankAccountCommand> collection):base(collection)
+        public CompositeBankAccountCommand(IEnumerable<BankAccountCommand> collection) : base(collection)
         {
-
         }
 
         public bool Success
@@ -139,7 +135,6 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
         {
             ForEach(cmd => cmd.Call());
         }
-
 
         public virtual void Undo()
         {
@@ -161,7 +156,6 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             });
         }
 
-
         public override void Call()
         {
             BankAccountCommand last = null;
@@ -178,10 +172,7 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
                     break;
                 }
             }
-
         }
-
-
 
         public class CommandDemo
         {
@@ -196,20 +187,16 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
 
                 Console.WriteLine(ba);
 
-
                 foreach (var cd in commands)
                 {
                     cd.Call();
                 }
 
-
                 foreach (var cd in Enumerable.Reverse(commands))
                 {
                     cd.Undo();
                 }
-
             }
-
 
             public static void CompositeCommandDemo()
             {
@@ -225,7 +212,6 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
                 composite.Undo();
                 Console.WriteLine(ba);
             }
-
 
             public static void MoneyTransferCommand()
             {
@@ -243,15 +229,9 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
 
                 Console.WriteLine(from);
                 Console.WriteLine(to);
-
             }
         }
-
-
     }
 
-
-
-    #endregion
-    
+    #endregion " Example 1 "
 }

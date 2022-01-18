@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond
 {
@@ -10,6 +8,7 @@ namespace CSharpPlayGrond
     {
         // Fill in the TempTracker class methods below
         private Dictionary<int, int> Temps;
+
         private int MaxValue;
         private int MinValue;
         private int SumValue;
@@ -38,7 +37,6 @@ namespace CSharpPlayGrond
                 this.Temps.Add(temp, 1);
             }
 
-
             this.SumValue += temp;
             this.MinValue = this.MinValue > temp ? temp : this.MinValue;
             this.MaxValue = this.MaxValue < temp ? temp : this.MaxValue;
@@ -66,6 +64,7 @@ namespace CSharpPlayGrond
             }
             return this.MinValue;
         }
+
         // Returns the mean of all temps we've seen so far
         public double? GetMean()
         {
@@ -86,5 +85,4 @@ namespace CSharpPlayGrond
             return this.ModeValue;
         }
     }
-
 }

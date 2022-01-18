@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.Behavioral
 {
-    // a chain of componenns who all get a change to process 
-    // a command or a query,optionally having default processing 
+    // a chain of componenns who all get a change to process
+    // a command or a query,optionally having default processing
     // implementation and an ability to terminate the processing
     // chain
 
-
     #region " example 1 -- Typical CQS implementation "
+
     // Command : asking for an action or change
     // Query : asking for information
     // CQS(Command & Query Seperatation) : having seperate means of sending commands & queries
@@ -22,7 +19,7 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
         public string Name;
         public int Attack, Defense;
 
-        public GameCreature(string name,int atk,int def)
+        public GameCreature(string name, int atk, int def)
         {
             this.Name = name;
             this.Attack = atk;
@@ -39,6 +36,7 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
     {
         protected GameCreature creature;
         protected CreatureModifier next; //linked list
+
         public CreatureModifier(GameCreature creature)
         {
             this.creature = creature ?? throw new ArgumentNullException(paramName: nameof(creature));
@@ -50,15 +48,15 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             else next = cm;
         }
 
-        public virtual void Handle() => next?.Handle(); 
+        public virtual void Handle() => next?.Handle();
     }
-
 
     public class DoubleAttackModifier : CreatureModifier
     {
         public DoubleAttackModifier(GameCreature creature) : base(creature)
         {
         }
+
         public override void Handle()
         {
             Console.WriteLine($"Doubling {creature.Name}'s attack");
@@ -72,6 +70,7 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
         public IncreasedDefenceModifier(GameCreature creature) : base(creature)
         {
         }
+
         public override void Handle()
         {
             Console.WriteLine($"Increasing {creature.Name}'s defense");
@@ -85,6 +84,7 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
         public NoBonusModifier(GameCreature creature) : base(creature)
         {
         }
+
         public override void Handle()
         {
             // do nothing
@@ -110,29 +110,28 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
         }
     }
 
-    #endregion
-
+    #endregion " example 1 -- Typical CQS implementation "
 
     #region " example 2 -- CQS with a Mediator"
-    
-    // Mediator Object 
+
+    // Mediator Object
     public class Game
     {
         public event EventHandler<Query> Queries;
 
-        public void PerformQuery(object sender,Query q)
+        public void PerformQuery(object sender, Query q)
         {
-            Queries?.Invoke(sender, q); 
+            Queries?.Invoke(sender, q);
         }
     }
 
     public class GameCreature1
     {
         public Game game;
-        private int attack, defense;     
+        private int attack, defense;
         public string Name;
 
-        public GameCreature1(Game game,string name,int attack,int defense)
+        public GameCreature1(Game game, string name, int attack, int defense)
         {
             this.game = game;
             this.Name = name;
@@ -178,9 +177,7 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             game.Queries += Handle;
         }
 
-
         protected abstract void Handle(object sender, Query q);
-
 
         public void Dispose()
         {
@@ -196,11 +193,11 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
 
         protected override void Handle(object sender, Query q)
         {
-            if((q.CreatureName == creature.Name) 
-                && q.WhatToQuery == Query.Argument.Attack){
+            if ((q.CreatureName == creature.Name)
+                && q.WhatToQuery == Query.Argument.Attack)
+            {
                 q.Value *= 2;
             }
-
         }
     }
 
@@ -217,14 +214,13 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             {
                 q.Value += 3;
             }
-
         }
     }
-
 
     public class Query
     {
         public string CreatureName;
+
         public enum Argument
         {
             Attack,
@@ -234,13 +230,12 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
         public Argument WhatToQuery;
         public int Value;
 
-        public Query(string name,Argument whatToQuery,int value)
+        public Query(string name, Argument whatToQuery, int value)
         {
             CreatureName = name;
             WhatToQuery = whatToQuery;
             Value = value;
         }
-
     }
 
     public static class CQSEnhancedDemo
@@ -251,21 +246,18 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             var goblin = new GameCreature1(game, "Strong Goblin", 3, 3);
             Console.WriteLine(goblin);
 
-            using(new DoubleAttackModifier1(game, goblin))
+            using (new DoubleAttackModifier1(game, goblin))
             {
-                Console.WriteLine(goblin); 
+                Console.WriteLine(goblin);
             }
 
             Console.WriteLine(goblin);
         }
     }
 
+    #endregion " example 2 -- CQS with a Mediator"
 
-
-    #endregion
-
-
-  namespace Coding.Exercise
+    namespace Coding.Exercise
     {
         public enum StatType
         {
@@ -285,17 +277,17 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             protected readonly int baseAttack;
             protected readonly int baseDefense;
 
-            protected Creature(Game game,int attack,int defense)
+            protected Creature(Game game, int attack, int defense)
             {
                 this.game = game;
                 this.baseAttack = attack;
                 this.baseDefense = defense;
-            } 
+            }
 
             public virtual int Attack { get; }
             public virtual int Defense { get; }
-            public abstract void PerformQuery(object sender, Query  q);
 
+            public abstract void PerformQuery(object sender, Query q);
         }
 
         public class Goblin : Creature
@@ -304,9 +296,10 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             {
             }
 
-            public Goblin(Game game,int attack,int defense) : base(game, attack, defense)
+            public Goblin(Game game, int attack, int defense) : base(game, attack, defense)
             {
             }
+
             public override int Defense
             {
                 get
@@ -328,6 +321,7 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
                     return q.Value;
                 }
             }
+
             public override void PerformQuery(object sender, Query q)
             {
                 if (ReferenceEquals(this, sender))
@@ -337,9 +331,11 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
                         case StatType.Attack:
                             q.Value += baseAttack;
                             break;
+
                         case StatType.Defense:
                             q.Value += baseDefense;
                             break;
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -352,15 +348,14 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
                     }
                 }
             }
-
         }
 
         public class GoblinKing : Goblin
         {
             public GoblinKing(Game game) : base(game, 3, 3)
             {
-
             }
+
             public override int Attack => base.Attack;
 
             public override int Defense => base.Defense;
@@ -380,5 +375,4 @@ namespace CSharpPlayGrond.DesignPatterns.Behavioral
             public IList<Creature> Creatures;
         }
     }
-
 }

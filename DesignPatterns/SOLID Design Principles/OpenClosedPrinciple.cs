@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 {
     public enum Color
     {
-        Red,Green,Blue
+        Red, Green, Blue
     }
 
     public enum Size
     {
-        Small,Medium,Large,Huge
+        Small, Medium, Large, Huge
     }
 
     public class Product
@@ -22,7 +19,7 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         public Color color;
         public Size size;
 
-        public Product(string name,Color clr,Size s)
+        public Product(string name, Color clr, Size s)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(paramName: nameof(Name));
@@ -30,13 +27,8 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
             this.Name = name;
             this.color = clr;
             this.size = s;
-
-
         }
-
-
     }
-
 
     //public class ProductFilter
     //{
@@ -67,7 +59,7 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 
     public interface IFilter<T>
     {
-        IEnumerable<T> Filter(IEnumerable<T> items,ISpecification<T> spec);
+        IEnumerable<T> Filter(IEnumerable<T> items, ISpecification<T> spec);
     }
 
     public class ColorSpecification : ISpecification<Product>
@@ -78,6 +70,7 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         {
             this.color = clr;
         }
+
         public bool IsSatisfied(Product t)
         {
             return t.color == color;
@@ -92,6 +85,7 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         {
             this.size = size;
         }
+
         public bool IsSatisfied(Product t)
         {
             return t.size == size;
@@ -106,15 +100,13 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         {
             this.spec1 = spec1;
             this.spec2 = spec2;
-
         }
+
         public bool IsSatisfied(T t)
         {
             return spec1.IsSatisfied(t) && spec2.IsSatisfied(t);
         }
     }
-
-
 
     public class BetterFilter : IFilter<Product>
     {
@@ -126,16 +118,13 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         }
     }
 
-
-
-    static class OpenClosedPrincipleDemo
+    internal static class OpenClosedPrincipleDemo
     {
-        static void Demo()
+        private static void Demo()
         {
             var apple = new Product("Apple", Color.Red, Size.Medium);
             var Orange = new Product("Orange", Color.Green, Size.Huge);
             var house = new Product("House", Color.Blue, Size.Huge);
-
 
             Product[] products = { apple, Orange, house };
             //Console.WriteLine("Color Filter :");
@@ -146,13 +135,12 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 
             //Console.WriteLine("Color Filter :");
             BetterFilter bf = new BetterFilter();
-            foreach (var p in bf.Filter(products,new ColorSpecification(Color.Red))){
+            foreach (var p in bf.Filter(products, new ColorSpecification(Color.Red)))
+            {
                 Console.WriteLine($"-  {p.Name}");
             }
 
-
-
-            //new composite filter 
+            //new composite filter
             foreach (var p in bf.Filter(
                 products, new AndSpecification<Product>(
                     new ColorSpecification(Color.Red),

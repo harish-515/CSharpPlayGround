@@ -1,50 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Xml.Serialization;
-using System.IO;
-
 
 namespace CSharpPlayGrond.DesignPatterns.Creational
 {
+    public class Point
+    {
+        public int X, Y;
 
-        public class Point
+        public Point()
         {
-            public int X, Y;
-
-            public Point()
-            {
-
-            }
-            public Point(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
-
         }
 
-        public class Line
+        public Point(int x, int y)
         {
-            public Point Start, End;
+            X = x;
+            Y = y;
+        }
+    }
 
-            public Line()
-            {
+    public class Line
+    {
+        public Point Start, End;
 
-            }
-
-            public Line DeepCopy()
-            {
-                using (var ms = new MemoryStream())
-                {
-                    var s = new XmlSerializer(typeof(Line));
-                    s.Serialize(ms, this);
-                    ms.Position = 0;
-                    return (Line)s.Deserialize(ms);
-                }
-            }
+        public Line()
+        {
         }
 
+        public Line DeepCopy()
+        {
+            using (var ms = new MemoryStream())
+            {
+                var s = new XmlSerializer(typeof(Line));
+                s.Serialize(ms, this);
+                ms.Position = 0;
+                return (Line)s.Deserialize(ms);
+            }
+        }
+    }
 }

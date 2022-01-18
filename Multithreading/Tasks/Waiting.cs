@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Multithreading
 {
-    class WaitingInTasks
+    internal class WaitingInTasks
     {
         public static void WaitingDemo()
         {
-
             // Pauses the current thread
             // -- Job Schedular can pick another thread for execution in this time
             // -- Context switching happens
@@ -34,7 +30,6 @@ namespace CSharpPlayGrond.Multithreading
             }, token);
 
             Console.ReadKey();
-
         }
 
         public static void TaskWaitingDemo()
@@ -46,7 +41,7 @@ namespace CSharpPlayGrond.Multithreading
            {
                Console.WriteLine("Task runs for 5 secs");
 
-               for(int i = 0; i < 5; i++)
+               for (int i = 0; i < 5; i++)
                {
                    token.ThrowIfCancellationRequested();
                    Thread.Sleep(1000);
@@ -65,19 +60,18 @@ namespace CSharpPlayGrond.Multithreading
                Console.WriteLine("Task 2 started");
                Thread.Sleep(3000);
                Console.WriteLine("Task 2 ended");
-           },token);
+           }, token);
 
             // waits for completion of task t & t2
-            Task.WaitAll(t,t2);
+            Task.WaitAll(t, t2);
 
             // waits untill the completions of one task either t or t2
             // t2 is completed in 3 secs , So it waits till t2 completion
             //Task.WaitAny(t, t2);
 
-
             // will wait until 4 sec or till any one on them is completed or cancelled
-            // this also throws an exception if cancelled WaitAll,WaitAny 
-            Task.WaitAny(new[] { t, t2 },4000,token);
+            // this also throws an exception if cancelled WaitAll,WaitAny
+            Task.WaitAny(new[] { t, t2 }, 4000, token);
         }
     }
 }

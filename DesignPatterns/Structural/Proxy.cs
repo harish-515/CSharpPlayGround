@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.Structural
 {
     /// <summary>
-    /// A class which functions as an interface to a particular 
+    /// A class which functions as an interface to a particular
     /// resource. That resource may be remote,expensive to construct
     /// or may require logging or some other added fucntionality.
-    /// 
-    /// Proxy Vs Decorator --  No additional memebers only additional functionality 
+    ///
+    /// Proxy Vs Decorator --  No additional memebers only additional functionality
     /// in exisiting memebers
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
 
     #region " Protection Proxy "
@@ -47,6 +44,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
     {
         public Driver Driver;
         public Car car = new Car();
+
         public CarPoxy(Driver driver)
         {
             Driver = driver;
@@ -74,7 +72,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
         }
     }
 
-    #endregion
+    #endregion " Protection Proxy "
 
     #region " Property Proxy "
 
@@ -92,9 +90,9 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
                 this.value = value;
             }
         }
+
         public Property() : this(Activator.CreateInstance<T>())
         {
-
         }
 
         public Property(T value)
@@ -109,7 +107,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
 
         public static implicit operator Property<T>(T value)
         {
-            return new Property<T>(value); // Property<int> p = 123; 
+            return new Property<T>(value); // Property<int> p = 123;
         }
 
         public static bool operator ==(Property<T> left, Property<T> right)
@@ -142,6 +140,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
             return hashCode;
         }
     }
+
     // without Proxy
     //public class Creature
     //{
@@ -150,6 +149,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
     public class Creature
     {
         private Property<int> agility = new Property<int>();
+
         public int Agility
         {
             get => agility.Value;
@@ -167,7 +167,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
             var c = new Creature();
             c.Agility = 10; // Without Proxy
                             // c.set_agility(10) is not called
-                            // where as the implicit converter 
+                            // where as the implicit converter
                             // are called
                             // c.set_agility = new Property<int>(10)
                             // we are replacing the exisitng property object
@@ -177,19 +177,22 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
         }
     }
 
-    #endregion
+    #endregion " Property Proxy "
 
     #region " Value Proxy "
+
     // proxy on a primitive type
-    
+
     [DebuggerDisplay("{value*100.0f}%")]
     public struct Percentage
     {
         private readonly float value;
+
         internal Percentage(float value)
         {
             this.value = value;
         }
+
         public static float operator *(float f, Percentage p)
         {
             return f * p.value;
@@ -204,15 +207,13 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
         {
             return $"{value * 100}%";
         }
-
     }
 
     public static class PercentageExtenstions
     {
-
         public static Percentage Percent(this float value)
         {
-            return new Percentage(value / 100f); 
+            return new Percentage(value / 100f);
         }
 
         public static Percentage Percent(this int value)
@@ -223,29 +224,27 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
 
     public static class ValueProxy
     {
-        //// here price can be sent any thing as it is an 
+        //// here price can be sent any thing as it is an
         //// interger type
         //static void BySomething(int price)
         //{
-
         //}
 
-        static void demo()
+        private static void demo()
         {
             Console.WriteLine(10f * 5.Percent());
             Console.WriteLine(3.Percent() + 5.Percent());
-
         }
     }
 
-
-    #endregion
+    #endregion " Value Proxy "
 
     #region " Composite Proxy 1 "
+
     public class Monster
     {
         public byte Age;
-        public int X,Y;
+        public int X, Y;
     }
 
     public class Monsters
@@ -263,13 +262,12 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
             Y = new int[size];
         }
 
-
         public struct MonsterProxy
         {
             private readonly Monsters monsters;
             private readonly int index;
 
-            public MonsterProxy(Monsters monsters,int index)
+            public MonsterProxy(Monsters monsters, int index)
             {
                 this.monsters = monsters;
                 this.index = index;
@@ -282,7 +280,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
 
         public IEnumerator<MonsterProxy> GetEnumerator()
         {
-            for(int pos = 0; pos < size; pos++)
+            for (int pos = 0; pos < size; pos++)
             {
                 yield return new MonsterProxy(this, pos);
             }
@@ -295,35 +293,31 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
         {
             // without Proxy
             // Memory Arrangement
-            // Age X Y Age X Y Age X Y Age X Y Age X Y .. 
-
+            // Age X Y Age X Y Age X Y Age X Y Age X Y ..
 
             var monsters = new Monster[100];
 
-            foreach(var c in monsters)
+            foreach (var c in monsters)
             {
                 c.X++;
             }
 
             // with Proxy
             // Memory Arrangement
-            // Age Age Age .. 
-            // X X X .. 
-            // Y Y Y .. 
+            // Age Age Age ..
+            // X X X ..
+            // Y Y Y ..
 
             var monsters2 = new Monsters(100);
             foreach (var c in monsters2)
-                c.X++; 
-
+                c.X++;
         }
     }
 
-
-
-    #endregion
+    #endregion " Composite Proxy 1 "
 
     #region " Composite Proxy 2 "
-    
+
     public class MasonrySettings
     {
         //public bool? All
@@ -348,21 +342,20 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
         //}
         //public bool Pillars, Walls, Floors;
 
-
         // Array Backed Properties
         private readonly bool[] flags = new bool[3];
 
-        public bool Pillars { get 
+        public bool Pillars
+        {
+            get
             {
                 return flags[0];
             }
             set
             {
             }
-
         }
-
     }
-    
-    #endregion
+
+    #endregion " Composite Proxy 2 "
 }

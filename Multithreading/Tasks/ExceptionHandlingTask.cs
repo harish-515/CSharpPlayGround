@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Multithreading.Tasks
 {
-    class ExceptionHandlingTask
+    internal class ExceptionHandlingTask
     {
         public static void ExceptionDemo()
         {
@@ -17,7 +14,7 @@ namespace CSharpPlayGrond.Multithreading.Tasks
             }
             // Again An aggregated exception of the remaining
             // exceptions is sent for resolution here
-            catch(AggregateException ae)
+            catch (AggregateException ae)
             {
                 foreach (var ex in ae.InnerExceptions)
                 {
@@ -28,11 +25,13 @@ namespace CSharpPlayGrond.Multithreading.Tasks
 
         private static void ExceptionFromTask()
         {
-            var t1 = Task.Factory.StartNew(() => {
+            var t1 = Task.Factory.StartNew(() =>
+            {
                 throw new ArgumentNullException("Exception from t1");
             });
 
-            var t2 = Task.Factory.StartNew(() => {
+            var t2 = Task.Factory.StartNew(() =>
+            {
                 throw new InvalidOperationException("Exception from t2");
             });
 
@@ -47,17 +46,18 @@ namespace CSharpPlayGrond.Multithreading.Tasks
                 token.ThrowIfCancellationRequested();
                 Thread.Sleep(2000);
                 Console.WriteLine("Task 3 stopped");
-            },token);
+            }, token);
 
             Console.ReadKey();
             cts.Cancel();
 
             try
             {
-                // With Wait configured the exceptions thrown by the 
+                // With Wait configured the exceptions thrown by the
                 // tasks are aggregated and thrown collectively as AggregatedException
-                Task.WaitAll(t1, t2,t3);
-            }catch(AggregateException ae)
+                Task.WaitAll(t1, t2, t3);
+            }
+            catch (AggregateException ae)
             {
                 foreach (var ex in ae.InnerExceptions)
                 {
@@ -67,19 +67,16 @@ namespace CSharpPlayGrond.Multithreading.Tasks
                 // handle only part of exceptions in AggregateException
                 ae.Handle(e =>
                 {
-                    // Only handeling ArgumentNullException and the rest are 
+                    // Only handeling ArgumentNullException and the rest are
                     // propagated to the parent function
-                    if (e is ArgumentNullException) {
+                    if (e is ArgumentNullException)
+                    {
                         Console.WriteLine("ArgumentNull Exception Handled");
                         return true;
                     }
                     return false;
                 });
             }
-
-
         }
-
-
     }
 }

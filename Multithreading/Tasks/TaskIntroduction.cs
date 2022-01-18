@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Multithreading
 {
-    class TaskIntroduction
+    internal class TaskIntroduction
     {
         public static void Write(char c)
         {
             int i = 100;
-            while(i-- > 0)
+            while (i-- > 0)
             {
                 Console.Write(c);
             }
@@ -31,18 +28,12 @@ namespace CSharpPlayGrond.Multithreading
             Console.WriteLine($"Task with ID : {Task.CurrentId} processing object {o}..");
             return o.ToString().Length;
         }
-
     }
 
-
-
-
-
-    class TaskIntroductionDemo
+    internal class TaskIntroductionDemo
     {
         public static void Demo()
         {
-
             //Task.Factory.StartNew(() => TaskIntroduction.Write('.'));
             //var t = new Task(() =>
             //{
@@ -63,7 +54,7 @@ namespace CSharpPlayGrond.Multithreading
             var task1 = new Task<int>(TaskIntroduction.TextLength, text1);
             task1.Start();
 
-            Task<int> task2= Task.Factory.StartNew<int>(TaskIntroduction.TextLength, text2);
+            Task<int> task2 = Task.Factory.StartNew<int>(TaskIntroduction.TextLength, text2);
 
             Console.WriteLine($"Lenght of {text1} is : {task1.Result}");
             Console.WriteLine($"Lenght of {text2} is : {task2.Result}");

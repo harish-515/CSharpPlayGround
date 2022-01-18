@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Multithreading.Tasks
 {
-    public class BankAccount{
+    public class BankAccount
+    {
         public int Balance { get; set; }
 
         public void Deposit(int amt)
         {
-
             //+=
             // op1 = temp <= get_balance() + amt
-            // op2 = set_balance <= temp 
+            // op2 = set_balance <= temp
             // b/w these 2 ops another thread can execute
 
             Balance += amt;
@@ -41,23 +40,25 @@ namespace CSharpPlayGrond.Multithreading.Tasks
         public void Deposit(int amt)
         {
             // critical section 1
-            lock (padlock) { 
-            Balance += amt;
+            lock (padlock)
+            {
+                Balance += amt;
             }
         }
 
         public void Withdraw(int amt)
         {
             // critical section 2
-            lock (padlock) { 
-            Balance -= amt;
+            lock (padlock)
+            {
+                Balance -= amt;
             }
         }
     }
 
     public class BankAccountInterlock
     {
-        // Interlocked Offers some built in functions 
+        // Interlocked Offers some built in functions
         // to run few non atomic operations in atomic way
 
         private int balance;
@@ -67,7 +68,7 @@ namespace CSharpPlayGrond.Multithreading.Tasks
         {
             // critical section 1
             // does the operations in a atomic way
-            Interlocked.Add(ref balance,amt);
+            Interlocked.Add(ref balance, amt);
         }
 
         public void Withdraw(int amt)
@@ -77,22 +78,24 @@ namespace CSharpPlayGrond.Multithreading.Tasks
         }
     }
 
-    class TaskDataSharing
+    internal class TaskDataSharing
     {
         public static void BankAccountDemo()
         {
             var tasks = new List<Task>();
             var ba = new BankAccountTaskSafe();
 
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
-                tasks.Add(Task.Factory.StartNew(() => { 
-                    for(int j = 0; j < 1000; j++)
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    for (int j = 0; j < 1000; j++)
                     {
                         ba.Deposit(100);
                     }
                 }));
-                tasks.Add(Task.Factory.StartNew(() => {
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
                     for (int j = 0; j < 1000; j++)
                     {
                         ba.Withdraw(100);
@@ -104,6 +107,7 @@ namespace CSharpPlayGrond.Multithreading.Tasks
 
             Console.WriteLine($" balance in account : {ba.Balance} ");
         }
+
         public static void BankAccountSpinLock()
         {
             var tasks = new List<Task>();
@@ -112,13 +116,13 @@ namespace CSharpPlayGrond.Multithreading.Tasks
             SpinLock sl = new SpinLock();
 
             // Spinlock if lock aquired will run the critical section
-            // if not wait (spinwait) unitl the critical section is run for that 
+            // if not wait (spinwait) unitl the critical section is run for that
             // task
-
 
             for (int i = 0; i < 10; i++)
             {
-                tasks.Add(Task.Factory.StartNew(() => {
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
                     for (int j = 0; j < 1000; j++)
                     {
                         var locktaken = false;
@@ -129,12 +133,13 @@ namespace CSharpPlayGrond.Multithreading.Tasks
                         }
                         finally
                         {
-                            if (locktaken) 
+                            if (locktaken)
                                 sl.Exit();
                         }
                     }
                 }));
-                tasks.Add(Task.Factory.StartNew(() => {
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
                     for (int j = 0; j < 1000; j++)
                     {
                         var locktaken = false;
@@ -172,7 +177,7 @@ namespace CSharpPlayGrond.Multithreading.Tasks
             {
                 sl.Enter(ref lockTaken);
             }
-            catch(LockRecursionException ex)
+            catch (LockRecursionException ex)
             {
                 // this exception is thrown when we try to acquire the lock recursivelly
                 Console.WriteLine(ex.Message);
@@ -210,10 +215,10 @@ namespace CSharpPlayGrond.Multithreading.Tasks
             Console.WriteLine($"Balance in account ba   Before: {ba.Balance}");
             Console.WriteLine($"Balance in account ba 2 Before: {ba2.Balance}");
 
-
             for (int i = 0; i < 1000; i++)
             {
-                tasks.Add(Task.Factory.StartNew(() => {
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
                     bool haveControl = mtx.WaitOne();
                     try
                     {
@@ -225,7 +230,8 @@ namespace CSharpPlayGrond.Multithreading.Tasks
                             mtx.ReleaseMutex();
                     }
                 }));
-                tasks.Add(Task.Factory.StartNew(() => {
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
                     bool haveControl = mtx.WaitOne();
                     try
                     {
@@ -238,7 +244,8 @@ namespace CSharpPlayGrond.Multithreading.Tasks
                     }
                 }));
 
-                tasks.Add(Task.Factory.StartNew(() => {
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
                     bool haveControl = Mutex.WaitAll(new[] { mtx, mtx1 });
                     try
                     {
@@ -253,8 +260,6 @@ namespace CSharpPlayGrond.Multithreading.Tasks
                         }
                     }
                 }));
-
-
             }
 
             Console.WriteLine(tasks.Count());
@@ -264,7 +269,8 @@ namespace CSharpPlayGrond.Multithreading.Tasks
             Console.WriteLine($"Balance in account ba 2 : {ba2.Balance}");
         }
 
-        static int num = 0;
+        private static int num = 0;
+
         public static void ReadWriteLockDemo()
         {
             ThreadPool.SetMinThreads(200, 200);
@@ -275,14 +281,14 @@ namespace CSharpPlayGrond.Multithreading.Tasks
 
             for (int i = 0; i < 10; i++)
             {
-                tasks.Add(Task.Factory.StartNew(() => 
+                tasks.Add(Task.Factory.StartNew(() =>
                 {
                     //rwl.EnterReadLock();
                     rwl.EnterUpgradeableReadLock();
 
-                    if(rn.Next() %2 == 0)
+                    if (rn.Next() % 2 == 0)
                     {
-                        rwl.EnterWriteLock(); 
+                        rwl.EnterWriteLock();
                         x *= 10;
                         rwl.ExitWriteLock();
                     }
@@ -302,13 +308,13 @@ namespace CSharpPlayGrond.Multithreading.Tasks
 
                     rwl.ExitWriteLock();
                 }));
-
             }
 
             try
             {
                 Task.WaitAll(tasks.ToArray());
-            }catch(AggregateException ae)
+            }
+            catch (AggregateException ae)
             {
                 ae.Handle(e =>
                 {
@@ -316,7 +322,6 @@ namespace CSharpPlayGrond.Multithreading.Tasks
                     return true;
                 });
             }
-
         }
     }
 }

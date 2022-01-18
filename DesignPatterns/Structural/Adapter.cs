@@ -4,8 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
 {
@@ -49,7 +47,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
         {
             return $"({x},{y})";
         }
-
     }
 
     public class Line
@@ -81,12 +78,10 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
         {
             return $"Start: {Start.ToString()}, End : {End.ToString()}";
         }
-
     }
 
     public class VectorObject : Collection<Line>
     {
-
     }
 
     public class Rectangle : VectorObject
@@ -107,7 +102,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
 
         public LineToPointAdapter(Line line)
         {
-
             // use cacheing to minimize the temporary data generation
             var hash = line.GetHashCode();
             if (cache.ContainsKey(hash))
@@ -130,7 +124,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
                         points.Add(new Point(left, y));
                     }
                 }
-
                 else if (bottom - top > 0)
                 {
                     for (int x = left; x <= right; x++)
@@ -151,7 +144,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
             return GetEnumerator();
         }
     }
-
 
     public class AdapterDemo
     {
@@ -180,7 +172,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
             }
         }
 
-
         public static void Demo()
         {
             Linedemo();
@@ -188,7 +179,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
         }
     }
 
-    #endregion
+    #endregion " Example 1 "
 
     #region " Generic Value Adapter "
 
@@ -209,8 +200,8 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
             public int Value => 3;
         }
     }
-    //Vector2f,Vector3i
 
+    //Vector2f,Vector3i
 
     // cannot be used where D is a literal
     // as C# dosent allow to do so.
@@ -223,23 +214,23 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
     //    }
     //}
 
-    public class Vector<Tself,T, D>
+    public class Vector<Tself, T, D>
         where D : IInteger, new()
-        where Tself : Vector<Tself, T, D>,new()
+        where Tself : Vector<Tself, T, D>, new()
     {
         protected T[] data;
+
         public Vector()
         {
             data = new T[new D().Value];
-        
         }
 
         public Vector(params T[] values)
         {
             var reqSize = new D().Value;
             var proSize = values.Length;
-            
-            for(int i = 0; i < Math.Min(reqSize, proSize); ++i)
+
+            for (int i = 0; i < Math.Min(reqSize, proSize); ++i)
             {
                 data[i] = values[i];
             }
@@ -259,7 +250,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
             return res;
         }
 
-
         public T this[int index]
         {
             get => data[index];
@@ -267,13 +257,12 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
         }
     }
 
-    public class VectorOfInt<Tself,D> : Vector<Tself, int, D>
+    public class VectorOfInt<Tself, D> : Vector<Tself, int, D>
         where D : IInteger, new()
-        where Tself : Vector<Tself,int,D>, new()
+        where Tself : Vector<Tself, int, D>, new()
     {
         public VectorOfInt()
         {
-
         }
 
         public VectorOfInt(params int[] values) : base(values)
@@ -296,28 +285,25 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
 
     public class Vector2i : VectorOfInt<Vector2i, Dimenssions.Two>
     {
-        public Vector2i() { }
+        public Vector2i()
+        { }
+
         public Vector2i(params int[] values) : base(values)
         {
         }
     }
 
-
-    public class VectorOfFloat<Tself,D> 
+    public class VectorOfFloat<Tself, D>
         : Vector<Tself, float, D>
         where D : IInteger, new()
-        where Tself : Vector<Tself,float,D>,new()
+        where Tself : Vector<Tself, float, D>, new()
     {
-
     }
 
-    public class Vector3f 
-        : VectorOfFloat<Vector3f,Dimenssions.Three>
+    public class Vector3f
+        : VectorOfFloat<Vector3f, Dimenssions.Three>
     {
-
     }
-
-
 
     public class GenericValueAdapterDemo
     {
@@ -326,19 +312,16 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
             var v = new Vector2i();
             v[0] = 1;
             v[0] = 2;
-            var vv = new Vector2i(2,3);
+            var vv = new Vector2i(2, 3);
 
             Vector3f v3f = Vector3f.Create(3.3f, 2.4f, 1.1f);
             // vf is not of type vector3f its just vector
 
             Vector2i v2i = Vector2i.Create(1, 4);
-        
         }
-
     }
 
-
-    #endregion
+    #endregion " Generic Value Adapter "
 
     #region " Dependency Injection -- Adapter "
 
@@ -358,6 +341,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
     public class Button
     {
         public ICommand command;
+
         public Button(ICommand cmd)
         {
             this.command = cmd;
@@ -380,6 +364,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
     public class Editor
     {
         public IEnumerable<Button> buttons;
+
         public Editor(IEnumerable<Button> buttons)
         {
             this.buttons = buttons;
@@ -390,9 +375,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
             foreach (Button btn in buttons)
                 btn.Click();
         }
-
     }
-
 
     public static class AdapterDIDemo
     {
@@ -405,12 +388,13 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Adapter
             cb.RegisterAdapter<ICommand, Button>(cmd => new Button(cmd));
 
             cb.RegisterType<Editor>();
-            using(var c = cb.Build())
+            using (var c = cb.Build())
             {
                 var editor = c.Resolve<Editor>();
                 editor.ClickAll();
             }
         }
     }
-    #endregion
+
+    #endregion " Dependency Injection -- Adapter "
 }

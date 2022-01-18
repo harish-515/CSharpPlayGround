@@ -9,10 +9,9 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
     /// over a large and sophisticated body of code.
     /// </summary>
 
-    class Facade // Fasade pattern
+    internal class Facade // Fasade pattern
     {
     }
-
 }
 
 namespace Coding.Exercise
@@ -97,23 +96,21 @@ namespace Coding.Exercise
             // todo
             var splitter = new Splitter();
             var generator = new Generator();
-            var verifier = new Verifier(); 
+            var verifier = new Verifier();
             var possibleSquare = new List<List<int>>();
             var isdone = false;
 
             while (!isdone)
             {
-                possibleSquare.Clear();  
+                possibleSquare.Clear();
                 for (int i = 0; i < size; i++)
                 {
                     possibleSquare.Add(generator.Generate(size));
-                    isdone = verifier.Verify(splitter.Split(possibleSquare));  
+                    isdone = verifier.Verify(splitter.Split(possibleSquare));
                 }
             }
 
-            return possibleSquare; 
+            return possibleSquare;
         }
     }
-
-
 }

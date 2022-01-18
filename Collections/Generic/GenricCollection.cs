@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Collections.Generic
 {
-    class DictionaryDemo
+    internal class DictionaryDemo
     {
         public DictionaryDemo()
         {
@@ -21,24 +19,23 @@ namespace CSharpPlayGrond.Collections.Generic
             {
                 demo.Add(3, 3);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine($" adding duplicate key : {ex.Message}");
             }
-
         }
 
         private void printDictionary(Dictionary<int, int> dict)
         {
             Console.WriteLine(" ******************** ");
-            foreach (KeyValuePair<int, int> pair in dict) {
+            foreach (KeyValuePair<int, int> pair in dict)
+            {
                 Console.WriteLine($" Keys : {pair.Key} -- Value : {pair.Value}");
             }
         }
-
     }
 
-    class SortedSetDemo
+    internal class SortedSetDemo
     {
         public SortedSetDemo()
         {
@@ -47,12 +44,10 @@ namespace CSharpPlayGrond.Collections.Generic
             {
                 s.Add(i);
             }
-
         }
-
     }
 
-    class ListDemo
+    internal class ListDemo
     {
         public ListDemo()
         {
@@ -72,7 +67,7 @@ namespace CSharpPlayGrond.Collections.Generic
         }
     }
 
-    class StackDemo
+    internal class StackDemo
     {
         public StackDemo()
         {
@@ -84,7 +79,7 @@ namespace CSharpPlayGrond.Collections.Generic
         }
     }
 
-    class QueueDemo
+    internal class QueueDemo
     {
         public QueueDemo()
         {
@@ -94,9 +89,8 @@ namespace CSharpPlayGrond.Collections.Generic
             q.Dequeue();
         }
     }
-    
-    
-    class HashSetDemo
+
+    internal class HashSetDemo
     {
         public HashSetDemo()
         {
@@ -110,13 +104,13 @@ namespace CSharpPlayGrond.Collections.Generic
         }
     }
 
-    class LinkedListDemo
+    internal class LinkedListDemo
     {
         public LinkedListDemo()
         {
             LinkedList<int> lk = new LinkedList<int>();
             lk.AddLast(1);
-            LinkedListNode<int> Node1 = lk.First; 
+            LinkedListNode<int> Node1 = lk.First;
             lk.AddAfter(Node1, 2);
             lk.AddBefore(Node1, 0);
 

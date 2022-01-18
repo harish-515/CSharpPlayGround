@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Others
 {
@@ -10,7 +6,6 @@ namespace CSharpPlayGrond.Others
     {
         public abstract void JustImplement();
     }
-
 
     public class B : A
     {
@@ -27,7 +22,6 @@ namespace CSharpPlayGrond.Others
             Console.WriteLine("This is from C");
         }
     }
-
 
     public class virtualA
     {
@@ -52,7 +46,4 @@ namespace CSharpPlayGrond.Others
             Console.WriteLine("this is from VB");
         }
     }
-
-
-
 }

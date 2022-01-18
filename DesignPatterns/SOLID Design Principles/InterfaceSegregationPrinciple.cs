@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
+﻿namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 {
     //public interface IMachine
     //{
@@ -13,7 +7,7 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
     //    void Fax(Document d);
     //}
 
-     public interface IPrinterMachine
+    public interface IPrinterMachine
     {
         void Print(Document d);
     }
@@ -30,10 +24,9 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 
     public class Document
     {
-
     }
 
-    public class ModernPrinter : IPrinterMachine,IFaxMachine,IScannerMachine//IMachine
+    public class ModernPrinter : IPrinterMachine, IFaxMachine, IScannerMachine//IMachine
     {
         public void Fax(Document d)
         {
@@ -69,8 +62,7 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         //}
     }
 
-
-    static class InterfaceSegregationPrincipleDemo
+    internal static class InterfaceSegregationPrincipleDemo
     {
     }
 }

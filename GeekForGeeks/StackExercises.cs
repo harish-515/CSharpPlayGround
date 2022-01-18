@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.GeekForGeeks
 {
-    static class StackExercises
+    internal static class StackExercises
     {
         public static void PrintStack(Stack<int> stk)
         {
             Console.WriteLine($"Top to bottom : {string.Join(",", stk)}");
         }
 
-        private static void insertAtBottom(Stack<int> stk,int value)
+        private static void insertAtBottom(Stack<int> stk, int value)
         {
-            if(stk.Count == 0)
+            if (stk.Count == 0)
             {
                 stk.Push(value);
             }
@@ -28,18 +25,17 @@ namespace CSharpPlayGrond.GeekForGeeks
                 stk.Push(top);
             }
         }
+
         public static void ReverseStack(Stack<int> stk)
         {
-            if(!(stk.Count == 0))
+            if (!(stk.Count == 0))
             {
                 int top = stk.Peek();
                 stk.Pop();
                 ReverseStack(stk);
 
-
-                insertAtBottom(stk,top);
+                insertAtBottom(stk, top);
             }
-                
         }
 
         private static void sortStackHelper(Stack<int> stk, int value)
@@ -69,11 +65,8 @@ namespace CSharpPlayGrond.GeekForGeeks
                 stk.Pop();
                 ReverseStack(stk);
 
-
                 insertAtBottom(stk, top);
             }
-
         }
-
     }
 }

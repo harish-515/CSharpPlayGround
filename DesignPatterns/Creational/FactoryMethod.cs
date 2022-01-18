@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.Creational
 {
     #region "Example"
-    interface IProduct
+
+    internal interface IProduct
     {
         string Name { get; set; }
 
-        string GetDescription();    
+        string GetDescription();
     }
 
-    class Product1 : IProduct
+    internal class Product1 : IProduct
     {
         public string Name { get; set; }
 
@@ -24,7 +21,7 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
         }
     }
 
-    class Product2 : IProduct
+    internal class Product2 : IProduct
     {
         public string Name { get; set; }
 
@@ -34,12 +31,12 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
         }
     }
 
-    interface IProductCreator
+    internal interface IProductCreator
     {
         IProduct CreateProduct();
     }
 
-    class Product1Creator : IProductCreator
+    internal class Product1Creator : IProductCreator
     {
         public IProduct CreateProduct()
         {
@@ -47,7 +44,7 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
         }
     }
 
-    class Product2Creator : IProductCreator
+    internal class Product2Creator : IProductCreator
     {
         public IProduct CreateProduct()
         {
@@ -55,7 +52,7 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
         }
     }
 
-    static class FactoryMethod
+    internal static class FactoryMethod
     {
         public static void demo()
         {
@@ -68,13 +65,13 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
             IProduct p2 = p1c.CreateProduct();
             p2.Name = "Sample2";
             Console.WriteLine(p2.GetDescription());
-
         }
-
     }
-    #endregion
+
+    #endregion "Example"
 
     #region "Problem 1"
+
     //public enum CoordinateSystem
     //{
     //    Cartesian,
@@ -101,11 +98,10 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //                break;
 
     //            default:
-    //                throw new ArgumentOutOfRangeException(nameof(sys), sys, null); 
-    //        }   
+    //                throw new ArgumentOutOfRangeException(nameof(sys), sys, null);
+    //        }
     //    }
     //}
-
 
     //class Point
     //{
@@ -130,9 +126,11 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //        return new Point(rho * Math.Cos(theta), rho * Math.Sin(theta));
     //    }
     //}
-    #endregion
+
+    #endregion "Problem 1"
 
     #region "Problem 2"
+
     // asynchronos initialization.
     // as constructor cannot initialize in async. Factories can do that for us.
 
@@ -149,12 +147,10 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //    //    return this;
     //    //}
 
-
-    //    // ----------------- Factory 
+    //    // ----------------- Factory
 
     //    private Foo()
     //    {
-          
     //    }
 
     //    private async Task<Foo> InitAsync()
@@ -166,8 +162,8 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //    public static Task<Foo> CreateAsync()
     //    {
     //        var result = new Foo();
-    //        return result.InitAsync(); 
-    //    } 
+    //        return result.InitAsync();
+    //    }
     //}
 
     //public class Problem2Demo
@@ -175,26 +171,28 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //    public static async Task Demo()
     //    {
     //        //var foo = new Foo();
-    //        //await foo.InitAsync(); 
+    //        //await foo.InitAsync();
 
     //       Foo x = await Foo.CreateAsync();
-    //    } 
+    //    }
     //}
-    #endregion
+
+    #endregion "Problem 2"
 
     #region "Problem 2"
+
     // Seperate Factory Class
     // When moving to a seperate factory. We must keep tht constructor public to be available for usage
     // And as this will be available publically . users can still use ths constructor whihc ma be a problem.
 
     // To avoid that make the constructor internal (only solves if we expose the functionality as a library)
     // make the factory method as inner class
-    class Point1
+    internal class Point1
     {
         private readonly double x;
         private readonly double y;
 
-        private Point1(double x,double y)
+        private Point1(double x, double y)
         {
             this.x = x;
             this.y = y;
@@ -202,7 +200,6 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
 
         //public static Point OriginProperty1 => new Point(0, 0); // initializes a new point every time we get
         //public static Point OriginProperty2 = new Point(0, 0);  // single copy is maintained and sent as reference
-
 
         // using static class
         //public class Factory
@@ -217,29 +214,29 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
         //    }
         //}
 
+        public static PointFactory Factory => new PointFactory();
 
-
-        public static PointFactory Factory => new PointFactory(); 
         public class PointFactory
         {
-            public  Point1 NewCartesionPoint(double x, double y)
+            public Point1 NewCartesionPoint(double x, double y)
             {
                 return new Point1(x, y);
             }
-            public  Point1 NewPolarPoint(double rho, double theta)
+
+            public Point1 NewPolarPoint(double rho, double theta)
             {
                 return new Point1(rho * Math.Cos(theta), rho * Math.Sin(theta));
             }
         }
     }
 
-
     public class Problem3Demo
     {
-        public static void  Demo()
+        public static void Demo()
         {
-            var point1 = Point1.Factory.NewCartesionPoint(1, 2); 
+            var point1 = Point1.Factory.NewCartesionPoint(1, 2);
         }
     }
-    #endregion
+
+    #endregion "Problem 2"
 }

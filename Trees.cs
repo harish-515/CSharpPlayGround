@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond
 {
@@ -32,7 +29,6 @@ namespace CSharpPlayGrond
 
     public class TreeMethods
     {
-
         public static int GetHeight(BinaryTreeNode root)
         {
             if (root == null)
@@ -44,6 +40,7 @@ namespace CSharpPlayGrond
                 return (1 + Math.Max(GetHeight(root?.Left), GetHeight(root?.Right)));
             }
         }
+
         public static bool IsBalanced(BinaryTreeNode treeRoot)
         {
             // Determine if the tree is superbalanced
@@ -104,6 +101,5 @@ namespace CSharpPlayGrond
             preorder.Add(root.Value);
             GetPreOrder(root.Right, preorder);
         }
-
     }
 }

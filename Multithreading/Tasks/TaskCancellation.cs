@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +12,6 @@ namespace CSharpPlayGrond.Multithreading
             var preservative = new CancellationTokenSource();
             var emergency = new CancellationTokenSource();
 
-
             var paranoid = CancellationTokenSource.CreateLinkedTokenSource(
                 planned.Token, preservative.Token, emergency.Token);
 
@@ -26,7 +22,7 @@ namespace CSharpPlayGrond.Multithreading
                 {
                     paranoid.Token.ThrowIfCancellationRequested();
                     Console.WriteLine($"{i++} \t");
-                    Thread.Sleep(1000);  
+                    Thread.Sleep(1000);
                 }
             });
 
@@ -34,13 +30,11 @@ namespace CSharpPlayGrond.Multithreading
             // can cancel either of the planned/preservative/emergency
             // will trigger the cancellation on paranoid token
             emergency.Cancel();
-
         }
     }
 
-    class TaskCancellationDemo
+    internal class TaskCancellationDemo
     {
-
         public static void Demo()
         {
             var cts = new CancellationTokenSource();
@@ -52,17 +46,14 @@ namespace CSharpPlayGrond.Multithreading
                 Console.WriteLine("Cancellation has been requested.");
             });
 
-
-
             var t = new Task(() =>
             {
                 int i = 0;
                 while (true)
                 {
-                    // Soft exit 
+                    // Soft exit
                     //if (token.IsCancellationRequested)
                     //    break;
-
 
                     // best practise is to throw an cancellation execption
                     //if (token.IsCancellationRequested)
@@ -70,23 +61,21 @@ namespace CSharpPlayGrond.Multithreading
                     //    throw new OperationCanceledException();
                     //}
 
-                    // same as above but encapulated into token 
+                    // same as above but encapulated into token
                     token.ThrowIfCancellationRequested();
-                    
+
                     Console.WriteLine($"{i++} \t");
                 };
-            },token);
+            }, token);
             t.Start();
 
-
             // Knowing that the task has been cancelled -- 2
-            Task.Factory.StartNew(() => {
+            Task.Factory.StartNew(() =>
+            {
                 token.WaitHandle.WaitOne();
 
                 Console.WriteLine("Wait handler released, As cancellation has been requested.");
-
             });
-
 
             Console.ReadKey();
             cts.Cancel();

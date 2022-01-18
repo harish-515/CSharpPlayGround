@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharpPlayGrond.DesignPatterns.Behavioral
+﻿namespace CSharpPlayGrond.DesignPatterns.Behavioral
 {
-    class Iterator
+    internal class Iterator
     {
     }
 }

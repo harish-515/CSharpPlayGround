@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharpPlayGrond
+﻿namespace CSharpPlayGrond
 {
     public class user
     {
-        static string dept = "1";
+        private static string dept = "1";
 
         public int ID { get; set; }
-
-
 
         public string Dosomething()
         {
@@ -37,5 +29,4 @@ namespace CSharpPlayGrond
             return matrix;
         }
     }
-
 }

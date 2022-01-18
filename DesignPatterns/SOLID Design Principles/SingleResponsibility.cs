@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 {
@@ -38,26 +35,23 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 
         //public void load(string filename)
         //{
-
         //}
-
     }
 
     public class Persisitance
     {
-        public void SaveToFile(Journal j ,string filename,bool overwrite= false)
+        public void SaveToFile(Journal j, string filename, bool overwrite = false)
         {
-            if(overwrite || !File.Exists(filename))
+            if (overwrite || !File.Exists(filename))
             {
                 File.WriteAllText(filename, j.ToString());
             }
         }
     }
 
-    static class SingleResponsibilityDemo
+    internal static class SingleResponsibilityDemo
     {
-
-        static void Demo()
+        private static void Demo()
         {
             var j = new Journal();
             j.AddEntry("i cried today");
@@ -70,7 +64,6 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
             p.SaveToFile(j, filename);
 
             Process.Start(filename);
-
         }
     }
 }

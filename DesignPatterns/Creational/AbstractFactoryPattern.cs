@@ -1,39 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.Creational
 {
     #region "Example 1"
 
-    interface Shape
+    internal interface Shape
     {
         string Name { get; set; }
 
         string GetDescription();
     }
 
-    interface IEarPhones
+    internal interface IEarPhones
     {
         string Name { get; set; }
 
         string GetDescription();
     }
 
-    interface IAccessories
-    {
-
-    }
-    class AbstractFactoryPatternDemo
+    internal interface IAccessories
     {
     }
 
+    internal class AbstractFactoryPatternDemo
+    {
+    }
 
-    #endregion
+    #endregion "Example 1"
 
     #region "Problem 1"
+
     // Abstarct Factory return abstract class or interface
 
     //public interface IHotDrink
@@ -57,19 +54,17 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //    }
     //}
 
-
     //public interface IHotDrinkFactory
     //{
     //    IHotDrink Prepare(int amount);
     //}
-
 
     //internal class TeaFactory : IHotDrinkFactory
     //{
     //    public IHotDrink Prepare(int amount)
     //    {
     //        Console.WriteLine($"Preparing Tea {amount}....");
-    //        return new Tea(); 
+    //        return new Tea();
     //    }
     //}
 
@@ -97,14 +92,13 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //        foreach(AvailableDrink drink in Enum.GetValues(typeof(AvailableDrink)))
     //        {
     //            var factory = (IHotDrinkFactory)Activator.CreateInstance(Type.GetType("CSharpPlayGrond.DesignPatterns.Creational." +Enum.GetName(typeof(AvailableDrink), drink) + "Factory"));
-    //            factories.Add(drink, factory); 
+    //            factories.Add(drink, factory);
     //        }
     //    }
 
-
     //    public IHotDrink MakeDrink(AvailableDrink drink,int amount)
     //    {
-    //        return factories[drink].Prepare(amount); 
+    //        return factories[drink].Prepare(amount);
     //    }
 
     //}
@@ -115,16 +109,13 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     //    {
     //        var machine = new HotDrinkMachine();
     //        var drink = machine.MakeDrink(HotDrinkMachine.AvailableDrink.Tea, 10);
-    //        drink.Consume(); 
+    //        drink.Consume();
     //    }
     //}
 
-
-
-    #endregion
+    #endregion "Problem 1"
 
     #region "Problem 2"
-
 
     public interface IHotDrink
     {
@@ -147,12 +138,10 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
         }
     }
 
-
     public interface IHotDrinkFactory
     {
         IHotDrink Prepare(int amount);
     }
-
 
     internal class TeaFactory : IHotDrinkFactory
     {
@@ -176,25 +165,23 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
     {
         // We have replaced the Enum by iterating all the implementations of IHotDrinkFactory through reflection.
 
-        private List<Tuple<string,IHotDrinkFactory>> factories = new List<Tuple<string, IHotDrinkFactory>>();
+        private List<Tuple<string, IHotDrinkFactory>> factories = new List<Tuple<string, IHotDrinkFactory>>();
 
         public HotDrinkMachine()
         {
-            foreach(var t in typeof(HotDrinkMachine).Assembly.GetTypes())
+            foreach (var t in typeof(HotDrinkMachine).Assembly.GetTypes())
             {
-                // check if the type t is implementing IHotDrinkFactory and not Interface 
+                // check if the type t is implementing IHotDrinkFactory and not Interface
                 //itself
-                if(typeof(IHotDrinkFactory).IsAssignableFrom(t) && !t.IsInterface)
+                if (typeof(IHotDrinkFactory).IsAssignableFrom(t) && !t.IsInterface)
                 {
                     factories.Add(Tuple.Create(
-                        t.Name.Replace("Factory",string.Empty),
+                        t.Name.Replace("Factory", string.Empty),
                         (IHotDrinkFactory)Activator.CreateInstance(t)
                         ));
                 }
-
             }
         }
-
 
         public IHotDrink MakeDrink()
         {
@@ -207,13 +194,13 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
             while (true)
             {
                 string s;
-                int drinkNo=0, amount =0;
+                int drinkNo = 0, amount = 0;
                 Console.WriteLine("Enter the required drink");
                 s = Console.ReadLine();
                 if (!string.IsNullOrEmpty(s))
                     int.TryParse(s, out drinkNo);
 
-                if(drinkNo > 0 && drinkNo < factories.Count)
+                if (drinkNo > 0 && drinkNo < factories.Count)
                 {
                     Console.WriteLine("Enter the required amount");
                     s = Console.ReadLine();
@@ -224,12 +211,8 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
                 }
 
                 Console.WriteLine("Incorrect Input Selected.");
-
             }
-
-
         }
-
     }
 
     public class Demo
@@ -242,7 +225,5 @@ namespace CSharpPlayGrond.DesignPatterns.Creational
         }
     }
 
-
-    #endregion
-
+    #endregion "Problem 2"
 }

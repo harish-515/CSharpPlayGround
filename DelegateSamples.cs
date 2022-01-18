@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond
 {
-    static class DelegateSamples
+    internal static class DelegateSamples
     {
-
         public delegate bool Filter(string name);
 
         public static List<string> NamesFilter(List<string> names, Filter filter)
@@ -39,5 +35,3 @@ namespace CSharpPlayGrond
         }
     }
 }
-
-    

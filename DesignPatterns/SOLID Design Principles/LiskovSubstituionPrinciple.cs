@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 {
@@ -13,7 +9,6 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 
         public Rectangle()
         {
-                
         }
 
         public Rectangle(int w, int h)
@@ -26,9 +21,6 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         {
             return $"Rectangle  Height :{Height} Width:{Width}";
         }
-
-
-
     }
 
     public class Square : Rectangle
@@ -42,12 +34,12 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
         {
             set { base.Height = base.Width = value; }
         }
-
     }
 
-    static class LiskovSubstituionPrincipleDemo
+    internal static class LiskovSubstituionPrincipleDemo
     {
-        static public int Area(Rectangle r) => r.Width * r.Height;
+        public static int Area(Rectangle r) => r.Width * r.Height;
+
         public static void Demo()
         {
             Rectangle rc = new Rectangle(2, 3);
@@ -58,12 +50,10 @@ namespace CSharpPlayGrond.DesignPatterns.SOLID_Design_Principles
 
             //Console.WriteLine($"Area of {sq.ToString()} : {Area(sq)}");
 
-
             Rectangle sq = new Square();
             sq.Width = 4;
 
             Console.WriteLine($"Area of {sq.ToString()} : {Area(sq)}");
-
         }
     }
 }

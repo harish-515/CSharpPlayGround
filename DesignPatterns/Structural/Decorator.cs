@@ -7,6 +7,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
 {
     // Add additional functionality to an exisiting code
     // without modifing the exisitng code base.
+
     #region " Custom String Builder "
 
     public class CodeBuilder
@@ -364,15 +365,13 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         }
     }
 
-
-    #endregion
+    #endregion " Custom String Builder "
 
     #region " Adapter Decorator  "
 
     public class MyStringBuilder
     {
         private readonly StringBuilder sb = new StringBuilder();
-
 
         public static implicit operator MyStringBuilder(string s)
         {
@@ -391,7 +390,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         {
             return sb.ToString();
         }
-
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -706,8 +704,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         }
     }
 
-
-    #endregion
+    #endregion " Adapter Decorator  "
 
     #region " Shape Decorator "
 
@@ -724,6 +721,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         }
 
         public int Radius { get; set; }
+
         public override string AsString()
         {
             return $"Circle of radius {Radius}.";
@@ -738,6 +736,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         }
 
         public int Size { get; set; }
+
         public override string AsString()
         {
             return $"Square of size {Size}.";
@@ -755,6 +754,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         public Shape Shape { get; set; }
 
         public string Color { get; set; }
+
         public override string AsString()
         {
             return $"{Shape.AsString()} And of color {Color}.";
@@ -772,6 +772,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         public Shape Shape { get; set; }
 
         public float Transparent { get; set; }
+
         public override string AsString()
         {
             return $"{Shape.AsString()} And with {Transparent * 100} % transperency.";
@@ -791,14 +792,13 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
             if (shape is ShapeDecorator sd)
                 types.AddRange(sd.types);
         }
-
     }
 
     public abstract class ShapeDecorator<TSelf, TCyclePolicy> : ShapeDecorator
         where TCyclePolicy : ShapeDecoratorCyclePolicy, new()
     {
-
         protected readonly TCyclePolicy policy = new TCyclePolicy();
+
         protected ShapeDecorator(Shape shape) : base(shape)
         {
             if (policy.TypesAdditionAllowed(typeof(TSelf), types))
@@ -815,27 +815,25 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         }
 
         public string Color { get; set; }
+
         public override string AsString()
         {
             return $"{Shape.AsString()} And of color {Color}.";
         }
     }
 
-
-    #endregion
-
+    #endregion " Decorator With Policy "
 
     #region " Decorator Cycle Policies "
+
     public abstract class ShapeDecoratorCyclePolicy
     {
-
         // Checks is if we can allow the wrapping of the exisitng object in this decorator
         public abstract bool TypesAdditionAllowed(Type type, IList<Type> types);
 
         // Checks if the decorator need to be appied on the object
         public abstract bool ApplicationAllowed(Type type, IList<Type> types);
     }
-
 
     public class ThrowOnCyclePolicy : ShapeDecoratorCyclePolicy
     {
@@ -858,9 +856,9 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
         }
     }
 
-    #endregion
+    #endregion " Decorator Cycle Policies "
 
-    #endregion
+    #endregion " Shape Decorator "
 
     public static class DecoratorDemo
     {
@@ -875,7 +873,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
 
             Console.WriteLine(trans_shape.AsString());
 
-
             Shape s = new Circle(5);
             Shape cs = new ColoredShape(s, "blue");
             Shape ts = new TransparentShape(cs, 0.01f);
@@ -883,5 +880,4 @@ namespace CSharpPlayGrond.DesignPatterns.Structural.Decorator
             Console.WriteLine(ts.AsString());
         }
     }
-
 }

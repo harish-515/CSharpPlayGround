@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond
 {
@@ -28,10 +26,8 @@ namespace CSharpPlayGrond
 
             for (int i = 0; i < input.Length; i++)
             {
-
                 if (char.IsLetter(input[i]))
                 {
-
                     if (wordLen == 0)
                     {
                         startIndex = i;
@@ -40,7 +36,6 @@ namespace CSharpPlayGrond
                 }
                 else
                 {
-
                     words.Add(input.Substring(startIndex, wordLen));
                     wordLen = 0;
                 }
@@ -66,15 +61,13 @@ namespace CSharpPlayGrond
                     _wordsToCounts[itemkey]++;
                 }
             }
-
-
         }
 
         public void PrintWordCount()
         {
-            foreach(KeyValuePair<string,int> kp in _wordsToCounts)
+            foreach (KeyValuePair<string, int> kp in _wordsToCounts)
             {
-                Console.WriteLine($"{kp.Key} -- {kp.Value}"); 
+                Console.WriteLine($"{kp.Key} -- {kp.Value}");
             }
         }
     }

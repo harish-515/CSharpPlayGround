@@ -1,31 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.GeekForGeeks
 {
-    class MinHeap
+    internal class MinHeap
     {
         private int capacity = 10;
         private int size = 10;
 
-        int[] items = new int[10];
+        private int[] items = new int[10];
 
-        private int getLeftChildIndex(int parentIdx) { return (parentIdx * 2 ) + 1; }
-        private int getRightChildIndex(int parentIdx) { return (parentIdx * 2) + 2; }
-        private int getParentIndex(int childIdx) { return (childIdx -1)* 2; }
+        private int getLeftChildIndex(int parentIdx)
+        { return (parentIdx * 2) + 1; }
 
-        private bool hasLeftChild(int index) { return getLeftChildIndex(index) < size; }
-        private bool hasRightChild(int index) { return getLeftChildIndex(index) < size; }
-        private bool hasParent(int index) { return getLeftChildIndex(index) >= 0; }
+        private int getRightChildIndex(int parentIdx)
+        { return (parentIdx * 2) + 2; }
 
-        private int LeftChild(int index) { return items[getLeftChildIndex(index)]; }
-        private int RightChild(int index) { return items[getRightChildIndex(index)]; }
-        private int Parent(int index) { return items[getParentIndex(index)]; }
+        private int getParentIndex(int childIdx)
+        { return (childIdx - 1) * 2; }
 
-        private void swap(int idx1,int idx2)
+        private bool hasLeftChild(int index)
+        { return getLeftChildIndex(index) < size; }
+
+        private bool hasRightChild(int index)
+        { return getLeftChildIndex(index) < size; }
+
+        private bool hasParent(int index)
+        { return getLeftChildIndex(index) >= 0; }
+
+        private int LeftChild(int index)
+        { return items[getLeftChildIndex(index)]; }
+
+        private int RightChild(int index)
+        { return items[getRightChildIndex(index)]; }
+
+        private int Parent(int index)
+        { return items[getParentIndex(index)]; }
+
+        private void swap(int idx1, int idx2)
         {
             int temp = items[idx1];
             items[idx1] = items[idx2];
@@ -34,9 +45,9 @@ namespace CSharpPlayGrond.GeekForGeeks
 
         private void IncreaseCapacity()
         {
-            if(size == capacity)
+            if (size == capacity)
             {
-                Array.Resize(ref items,capacity*2);
+                Array.Resize(ref items, capacity * 2);
                 capacity *= 2;
             }
         }
@@ -49,14 +60,12 @@ namespace CSharpPlayGrond.GeekForGeeks
                 return items[0];
         }
 
-
         public void Insert(int item)
         {
             IncreaseCapacity();
             items[size] = item;
             size++;
             HeapifyUp();
-
         }
 
         public int Remove()
@@ -73,7 +82,7 @@ namespace CSharpPlayGrond.GeekForGeeks
         private void HeapifyUp()
         {
             int index = size - 1;
-            while(hasParent(index) && Parent(index) > items[index])
+            while (hasParent(index) && Parent(index) > items[index])
             {
                 swap(getParentIndex(index), index);
                 index = getParentIndex(index);
@@ -86,7 +95,7 @@ namespace CSharpPlayGrond.GeekForGeeks
             while (hasLeftChild(index))
             {
                 int smallerChildindex = getLeftChildIndex(index);
-                if(hasRightChild(index) && RightChild(index) < LeftChild(index))
+                if (hasRightChild(index) && RightChild(index) < LeftChild(index))
                 {
                     smallerChildindex = getRightChildIndex(index);
                 }

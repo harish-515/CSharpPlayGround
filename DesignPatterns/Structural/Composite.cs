@@ -2,14 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.DesignPatterns.Structural
 {
     #region " Geometric Shapes"
-    
+
     public class GraphicObject
     {
         public virtual string Name { get; set; } = "Group";
@@ -21,12 +19,11 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
             sb.Append(new string('*', depth))
                 .Append(String.IsNullOrEmpty(Color) ? string.Empty : Color)
                 .Append(Name);
-            foreach(var child in Children)
+            foreach (var child in Children)
             {
                 child.Print(sb, depth + 1);
             }
         }
-
 
         private Lazy<List<GraphicObject>> children = new Lazy<List<GraphicObject>>();
         public List<GraphicObject> Children => this.children.Value;
@@ -37,9 +34,8 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
             Print(sb, 0);
             return sb.ToString();
         }
-
     }
-    
+
     public class Circle : GraphicObject
     {
         public override string Name => "Circle";
@@ -68,24 +64,24 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
         }
     }
 
-
-    #endregion
+    #endregion " Geometric Shapes"
 
     #region " Neural Networks "
 
     public class S1
     {
-        public static void foo() { }
+        public static void foo()
+        { }
     }
-    
+
     public static class NeuronExtensionMethods
     {
         public static void ConnectTo(this IEnumerable<Neuron> self,
             IEnumerable<Neuron> other)
         {
-            foreach(var from in self)
+            foreach (var from in self)
             {
-                foreach(var to in other)
+                foreach (var to in other)
                 {
                     from.Out.Add(to);
                     to.In.Add(from);
@@ -97,7 +93,7 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
     public class Neuron : IEnumerable<Neuron>
     {
         public float Value;
-        public List<Neuron> In,Out;
+        public List<Neuron> In, Out;
 
         public IEnumerator<Neuron> GetEnumerator()
         {
@@ -109,10 +105,9 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
             return GetEnumerator();
         }
     }
-    
+
     public class NeuronLayer : Collection<Neuron>
     {
-    
     }
 
     public static class NeuronDemo
@@ -123,22 +118,19 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
             var neuron2 = new Neuron();
             neuron1.ConnectTo(neuron2);
 
-
             var layer1 = new NeuronLayer();
             layer1.ConnectTo(neuron2);
         }
     }
 
-    #endregion
+    #endregion " Neural Networks "
 
     #region " Exercise "
 
-
-  namespace Coding.Exercise
+    namespace Coding.Exercise
     {
         public interface IValueContainer : IEnumerable<int>
         {
-
         }
 
         public class SingleValue : IValueContainer
@@ -158,7 +150,6 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
 
         public class ManyValues : List<int>, IValueContainer
         {
-
         }
 
         public static class ExtensionMethods
@@ -174,7 +165,5 @@ namespace CSharpPlayGrond.DesignPatterns.Structural
         }
     }
 
-
-
-    #endregion
+    #endregion " Exercise "
 }

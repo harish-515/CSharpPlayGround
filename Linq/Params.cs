@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Linq
 {
-    class Params : IEnumerable<int>
+    internal class Params : IEnumerable<int>
     {
         private readonly int a;
         private readonly int b;
@@ -25,7 +22,6 @@ namespace CSharpPlayGrond.Linq
             yield return a;
             yield return b;
             yield return c;
-
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -34,13 +30,12 @@ namespace CSharpPlayGrond.Linq
         }
     }
 
-    class Person
+    internal class Person
     {
         private string firstname, middlename, lastname;
 
-        public Person(string firstname,string middlename,string lastname)
+        public Person(string firstname, string middlename, string lastname)
         {
-
         }
 
         public IEnumerable<String> Names
@@ -52,17 +47,14 @@ namespace CSharpPlayGrond.Linq
                 yield return lastname;
             }
         }
-
     }
 
     public static class IEnumeratorDemo
     {
-
-
         public static void Demo()
         {
             var p = new Params(1, 2, 3);
-            foreach(var x in p)
+            foreach (var x in p)
             {
                 Console.WriteLine(x);
             }
@@ -72,9 +64,6 @@ namespace CSharpPlayGrond.Linq
             {
                 Console.WriteLine(name);
             }
-            
-            
         }
     }
-
 }

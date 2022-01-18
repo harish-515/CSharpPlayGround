@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond.Linq
 {
-    class Person1
+    internal class Person1
     {
         public string Name;
         public int Age;
     }
 
-    class LinkExamples
+    internal class LinkExamples
     {
         public static void LinkExampleDemo()
         {
@@ -26,7 +24,7 @@ namespace CSharpPlayGrond.Linq
 
             Console.WriteLine(Enumerable.Range(1, 10).Select(i => new string('x', i)));
 
-            // Mode of Operations 
+            // Mode of Operations
             // Immediate
             // Deferred
 
@@ -34,7 +32,7 @@ namespace CSharpPlayGrond.Linq
             // Calculations will only happens when you iterate the collection
             //Ex Enumerable.Range(1,10).Select(rand.Next(10));
 
-            // Deferred operations 
+            // Deferred operations
             // streaming -- do not have to read all data befre elemets are yielded
             // non streaming -- must read all source data before they yeild an element
 
@@ -58,16 +56,15 @@ namespace CSharpPlayGrond.Linq
             var arr2 = new[] { 1, 2, 3 };
             IEnumerable<int> arre = arr2.AsEnumerable();
 
-
             // AsParallel -- for parallel computation
-            // AsQueryable -- 
+            // AsQueryable --
 
-            // Projector Operations 
+            // Projector Operations
             //Select
             //SelectMany
 
             var nums = Enumerable.Range(1, 4);
-            var squares = nums.Select(i => i * i); //map 
+            var squares = nums.Select(i => i * i); //map
             Console.WriteLine(squares);
 
             string sentance = "This is a nice sentance";
@@ -78,11 +75,9 @@ namespace CSharpPlayGrond.Linq
             var wordswithlength = sentance.Split().Select(w => new { Word = w, Size = w.Length });
             Console.WriteLine(wordswithlength);
 
-
             Random rand = new Random();
             var randnums = Enumerable.Range(1, 10).Select(_ => rand.Next(10));
             Console.WriteLine(randnums);
-
 
             var sequences = new[] { "red,green,blue", "oranage", "white,pink" };
             //var allwords = sequences.Select(s=>s.Split(','));
@@ -103,7 +98,6 @@ namespace CSharpPlayGrond.Linq
             var evenNums = ns.Where(n => n % 2 == 0);
             Console.WriteLine(evenNums);
 
-
             // COmbination of Projection & Filtering
 
             var oddSquares = ns.Select(x => x * x).Where(y => y % 2 == 1);
@@ -114,10 +108,10 @@ namespace CSharpPlayGrond.Linq
             Console.WriteLine(values.OfType<double>());
             Console.WriteLine(values.OfType<float>());
 
-
             var randomValues = Enumerable.Range(1, 10).Select(_ => rand.Next(10) - 5).ToArray();
 
-            var csvString = new Func<IEnumerable<int>, string>(vs => {
+            var csvString = new Func<IEnumerable<int>, string>(vs =>
+            {
                 return string.Join(",", vs.ToArray());
             });
 
@@ -141,7 +135,6 @@ namespace CSharpPlayGrond.Linq
 
             */
 
-
             // the results of orederby is not iEnumerable by it is IOrderedEnumerable
             Console.WriteLine(people.OrderBy(p => p.Name));
             IOrderedEnumerable<Person1> sortedPeople = people.OrderBy(p => p.Name);
@@ -151,9 +144,6 @@ namespace CSharpPlayGrond.Linq
             //Reversing a Collection
             string s = "this is a test";
             Console.WriteLine(new string(s.Reverse().ToArray()));
-
-
-
 
             var byName = people.GroupBy(p => p.Name);
             Console.WriteLine(byName);
@@ -165,14 +155,12 @@ namespace CSharpPlayGrond.Linq
             var byAgeNames = people.GroupBy(p => p.Age < 30, p => p.Name);
             Console.WriteLine(byAgeNames);
 
-
             foreach (var item in byAgeNames)
             {
                 Console.WriteLine($"These people are {item.Key} years old");
                 foreach (var name in item)
                     Console.WriteLine($" -{name}");
             }
-
 
             //Quantifiers & Partitioning
 
@@ -202,7 +190,6 @@ namespace CSharpPlayGrond.Linq
             Console.WriteLine(new int[] { }.Any());
             Console.WriteLine(new int[] { 1 }.Any());
 
-
             //skip & take
 
             var inputs = new[] { 3, 3, 2, 2, 1, 1, 2, 2, 3, 3 };
@@ -218,6 +205,5 @@ namespace CSharpPlayGrond.Linq
             var input = new[] { -3, -1, 3, 7, 1, -3, 7 };
             Console.WriteLine(input.Where(i => i > 0).Distinct().Count());
         }
-
     }
 }

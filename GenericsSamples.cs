@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpPlayGrond
 {
-
     public class GenericEx<T>
     {
         private T[] items;
@@ -53,42 +48,39 @@ namespace CSharpPlayGrond
             this.Count++;
         }
 
-
-        public static GenericEx<T> operator+ (GenericEx<T> Col1, GenericEx<T> Col2)
+        public static GenericEx<T> operator +(GenericEx<T> Col1, GenericEx<T> Col2)
         {
             GenericEx<T> result = new GenericEx<T>();
 
-            if(Col1.Count != Col2.Count)
+            if (Col1.Count != Col2.Count)
             {
                 throw new InvalidOperationException("Collection count not matching.");
             }
             else
             {
-                for(int i = 0; i < Col1.Count; i++)
+                for (int i = 0; i < Col1.Count; i++)
                 {
                     result.Add((dynamic)Col1[i] + (dynamic)Col2[i]);
                 }
             }
-        
+
             return result;
         }
-
     }
 
-
-    public class ArrayListExample 
+    public class ArrayListExample
     {
         public ArrayList ArrayListSample { get; set; }
 
         public ArrayListExample()
         {
-            ArrayListSample = new ArrayList();            
+            ArrayListSample = new ArrayList();
         }
 
         private void PrintArrayList()
         {
             Console.WriteLine("Array List Items : ");
-            foreach(object item in ArrayListSample)
+            foreach (object item in ArrayListSample)
             {
                 Console.WriteLine($"{ArrayListSample.IndexOf(item)}. {item}");
             }
@@ -116,7 +108,4 @@ namespace CSharpPlayGrond
             PrintArrayList();
         }
     }
-
-
-
 }
