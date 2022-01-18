@@ -111,10 +111,10 @@
     <Compile Include="GeekForGeeks\LinkedListExercises.cs" />
     <Compile Include="GeekForGeeks\StackExercises.cs" />
     <Compile Include="GeekForGeeks\StringExercises.cs" />
-    <Compile Include="GenericsSamples.cs" />
-    <Compile Include="DelegateSamples.cs" />
-    <Compile Include="Digit.cs" />
-    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Others\GenericsSamples.cs" />
+    <Compile Include="Others\DelegateSamples.cs" />
+    <Compile Include="Others\Digit.cs" />
+    <Compile Include="Others\ExtensionMethods.cs" />
     <Compile Include="Linq\LinkExamples.cs" />
     <Compile Include="Linq\Params.cs" />
     <Compile Include="Multithreading\Tasks\ExceptionHandlingTask.cs" />
@@ -122,13 +122,13 @@
     <Compile Include="Multithreading\Tasks\TaskDataSharing.cs" />
     <Compile Include="Multithreading\Tasks\TaskIntroduction.cs" />
     <Compile Include="Multithreading\Tasks\Waiting.cs" />
-    <Compile Include="OtherPrograms.cs" />
+    <Compile Include="Others\OtherPrograms.cs" />
     <Compile Include="Others\Others.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TempTracker.cs" />
-    <Compile Include="Trees.cs" />
-    <Compile Include="WordCloud.cs" />
+    <Compile Include="Others\TempTracker.cs" />
+    <Compile Include="Others\Trees.cs" />
+    <Compile Include="Others\WordCloud.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

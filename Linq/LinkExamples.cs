@@ -33,7 +33,7 @@ namespace CSharpPlayGrond.Linq
             //Ex Enumerable.Range(1,10).Select(rand.Next(10));
 
             // Deferred operations
-            // streaming -- do not have to read all data befre elemets are yielded
+            // streaming -- do not have to read all data before elemets are yielded
             // non streaming -- must read all source data before they yeild an element
 
             var list = new System.Collections.ArrayList();
